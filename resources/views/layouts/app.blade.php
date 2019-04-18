@@ -53,6 +53,9 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ url('/findfriend') }}/ {{ Auth::user()->slug }}">{{ __('Find Friend') }}</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ url('/request') }}/ {{ Auth::user()->slug }}">{{ __('My Request') }}({{ App\friendship::where('status', '=', Null)->where('user_request',Auth::user()->id)->count() }})</a>
+                            </li>
                     @endauth
                     </ul>
                     <!-- Right Side Of Navbar -->

@@ -44,6 +44,13 @@
             <div class="panel-body">
                 <p style="margin-top: 8px;"><b>{{Auth::user()->name }}</b></p>
                 <hr>
+                @if( session()->has('msg'))
+                                 <p>
+                                 	{{session()->get('msg')}}
+                                 </p>
+                               
+                          
+                       @endif
                     <div class=" col-sm-12 col-md-12">
                        
 
@@ -57,23 +64,19 @@
                                 <div class="col-md-7 " align="center">
                                 <h3 style="margin:0px;"><a href="{{url('/profile')}}/{{$uList->slug}}">
                                   {{ucwords($uList->name)}}</a></h3>
-                                <p><i class="fa fa-globe"></i> {{$uList->city}}  - {{$uList->country}}</p>
-                                <?php 
-                                    $check = DB::table('friendships')
-                                        ->where('user_request','=',$uList->id)
-                                        ->where('requester','=',Auth::user()->id)
-                                        ->first();
+                               
+                                @foreach($allUsers2 as $uList2)
 
-                                        if ($check=='') {
-                                            
-                                    
-                                ?>
-                    <p><a href="{{url('/addfriend') }}/{{$uList->id}}" class="btn btn-primary" style="text-align: center">Add Friend</a></p>
-                        <?php }else { ?>
-                                <p style="color: green;">Request Sent</p>
-                        <?php } ?>
+                                 <p>About :{{($uList2->city)}}</p>
+                                <p>About :{{($uList2->about)}}</p>
 
-                             <p style="text-align: center">{{$uList->about}}</p>
+                                 @endforeach
+
+                                 
+                        <p>
+                           	<a href="{{url('/accept') }}/{{$uList->name}}/{{$uList->id}}" class="btn btn-primary" style="text-align: center">Confirm</a>
+                           </p>
+                                
                             </div>
 
                             </div>

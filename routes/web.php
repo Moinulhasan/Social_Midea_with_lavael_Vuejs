@@ -31,4 +31,6 @@ Route::group(['middleware'=>'auth'],function () {
     Route::get('/editprofile','ProfileController@editprofile');
      Route::get('/findfriend/{slug}','ProfileController@findfriend');
      Route::get('/addfriend/{id}','ProfileController@addfriend');
+     Route::get('/accept/{name}/{id}','ProfileController@accept');
+     Route::get('/request/{slug}','ProfileController@request');
 });

@@ -17,7 +17,7 @@ class CreateFriendshipsTable extends Migration
             $table->bigIncrements('id');
             $table->string('requester');
             $table->string('user_request');
-            $table->tinyInteger('status');
+            $table->tinyInteger('status')->nullable();
             $table->timestamps();
         });
     }

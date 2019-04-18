@@ -82,6 +82,7 @@ class RegisterController extends Controller
             'slug' => str_slug($data['name'],'-'),
             'password' => Hash::make($data['password']),
         ]);
+        
 
          Profile::create(['user_id' => $user->id]);
         return $user;
