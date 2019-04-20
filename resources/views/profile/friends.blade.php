@@ -1,12 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-<style type="text/css">
-    a:hover{
-        text-decoration: none;
-    }
-
-</style>
 <div class="container">
     <div class="row ">
         <div class="col-md-4">
@@ -50,37 +44,41 @@
             <div class="panel-body">
                 <p style="margin-top: 8px;"><b>{{Auth::user()->name }}</b></p>
                 <hr>
+                @if( session()->has('msg'))
+                                 <p class="alert alert-success">
+                                 	{{session()->get('msg')}}
+                                 </p>
+                               
+                          
+                       @endif
                     <div class=" col-sm-12 col-md-12">
                        
 
-                        <div class="row" style="padding: 5px;" >
+                        <div class="row" align="center" >
                              @foreach($allUsers as $uList)
                             <div class="card col-md-5 "style="margin-left: 8px;margin-top: 10px;">
                                 <div class="card-img">
-                                    <h3 style="margin:0px;"><a href="{{url('/profile')}}/{{$uList->slug}}" >
+                                	 <h3 style="margin:0px;"><a href="{{url('/profile')}}/{{$uList->slug}}">
                                   {{ucwords($uList->name)}}</a></h3>
                                 <img src="{{url('/public/img')}}/{{$uList->pic}}"
                                 width="100px" height="100px" style="border-radius: 50%;margin-left: 20px;padding: 5px;"/>
                                 </div>
                                 <div class="col-md-7 " align="center">
+                               
+                               
+                                @foreach($allUsers2 as $uList2)
+
+                                 <p>About :{{($uList2->city)}}</p>
+                                <p>About :{{($uList2->about)}}</p>
+
+                                 @endforeach
+
+                                 
+                        <p>
+                           	
+                           	<a href="{{url('/unfriend') }}/{{$uList->id}}" class="btn btn-danger" style="text-align: center">Unfriend</a>
+                          </p>
                                 
-                                <p><i class="fa fa-globe"></i> {{$uList->city}}  - {{$uList->country}}</p>
-                                <?php 
-                                    $check = DB::table('friendships')
-                                        ->where('user_request','=',$uList->id)
-                                        ->where('requester','=',Auth::user()->id)
-                                        ->first();
-
-                                        if ($check=='') {
-                                            
-                                    
-                                ?>
-                    <p><a href="{{url('/addfriend') }}/{{$uList->id}}" class="btn btn-primary" style="text-align: center">Add Friend</a></p>
-                        <?php }else { ?>
-                                <p style="color: green;">Request Sent</p>
-                        <?php } ?>
-
-                             <p style="text-align: center">{{$uList->about}}</p>
                             </div>
 
                             </div>

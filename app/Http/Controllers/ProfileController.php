@@ -90,5 +90,62 @@ class ProfileController extends Controller
     		}
 
     }
+    public function friends(){
+
+    	$uid = Auth::user()->id;
+        $friends1 = DB::table('friendships')
+                ->leftJoin('users', 'users.id', 'friendships.user_request') // who is not loggedin but send request to
+                ->where('status', 1)
+                ->where('requester','=', $uid) // who is loggedin
+                ->get();
+        //dd($friends1);
+        $friends2 = DB::table('friendships')
+                ->leftJoin('users', 'users.id', 'friendships.requester')
+                ->where('status', 1)
+                ->where('user_request','=', $uid)
+                ->get();
+                if ($friends1) {
+                	$allUsers = array_merge($friends1->toArray());
+                }
+                else {
+                	$allUsers = array_merge($friends1->toArray(),$friends1->toArray());
+                }
+        
+    	$allUsers2 = DB::table('profiles')
+       					 ->rightJoin('friendships', 'friendships.requester','=', 'profiles.user_id',)
+       					 ->where('friendships.id', '=', $uid)->get();
+
+    	return view('profile.friends',compact('allUsers','allUsers2'))->with('data', Auth::user()->profile);
+    }
+    public function remove($id){
+
+    	DB::table('friendships')
+    		->where('user_request',Auth::user()->id)
+    		->where('requester',$id)
+    		->delete();
+
+    		return back()->with('msg','Request Has Been Deleted');
+    }
+    public function unfriend($id){
+    	$uid = Auth::user()->id;
+        $check= friendship::where('requester', $uid)
+                ->where('user_request', $id)
+                ->first();
+            if ($check) {
+            // echo "yes, update here";
+            $update= DB::table('friendships')
+                    ->where('user_request', $id)
+                    ->where('requester', $uid)
+                    ->update(['status' => Null]);
+
+
+    				if ($update) {
+    					return back()->with('msg','unfriend Successgully ');
+    				}
+    				else{
+    					return back()->with('msg','unfriend Successgully  ');
+    				}
+    		}
+    }
 }
 

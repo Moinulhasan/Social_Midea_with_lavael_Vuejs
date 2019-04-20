@@ -45,7 +45,7 @@
                 <p style="margin-top: 8px;"><b>{{Auth::user()->name }}</b></p>
                 <hr>
                 @if( session()->has('msg'))
-                                 <p>
+                                 <p class="alert alert-success">
                                  	{{session()->get('msg')}}
                                  </p>
                                
@@ -54,9 +54,9 @@
                     <div class=" col-sm-12 col-md-12">
                        
 
-                        <div class="row" style="padding: 5px;" >
+                        <div class="row" align="center" >
                              @foreach($allUsers as $uList)
-                            <div class="card col-md-5 "style="margin-left: 8px;margin-top: 10px;">
+                            <div class="card col-md-6 "style="margin-left: 8px;margin-top: 10px;">
                                 <div class="card-img">
                                 <img src="{{url('/public/img')}}/{{$uList->pic}}"
                                 width="100px" height="100px" style="border-radius: 50%;margin-left: 20px;padding: 5px;"/>
@@ -74,8 +74,9 @@
 
                                  
                         <p>
-                           	<a href="{{url('/accept') }}/{{$uList->name}}/{{$uList->id}}" class="btn btn-primary" style="text-align: center">Confirm</a>
-                           </p>
+                           	<a href="{{url('/accept') }}/{{$uList->name}}/{{$uList->id}}" class="btn btn-primary" style="text-align: center;size: 10px;">Confirm</a>
+                           	<a href="{{url('/remove') }}/{{$uList->id}}" class="btn btn-danger" style="text-align: center">Remove</a>
+                          </p>
                                 
                             </div>
 
